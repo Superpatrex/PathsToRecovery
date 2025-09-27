@@ -13,6 +13,8 @@ class GestureState:
     gesture_start_time: float = 0
     is_transitioning: bool = False
     confidence: float = 0.0
+    hand_x: float = 0.0
+    hand_y: float = 0.0
 
 @dataclass
 class CalibrationData:
@@ -31,7 +33,7 @@ class GestureRecognizer:
             min_detection_confidence=0.7,
             min_tracking_confidence=0.5
         )
-        
+
         self.state = GestureState()
         self.calibration = CalibrationData()
 
@@ -215,6 +217,10 @@ class GestureRecognizer:
         self.position_history.append(hand_center)
         self.velocity_history.append(velocity)
 
+        # Store hand position in state (normalized coordinates 0-1)
+        self.state.hand_x = float(hand_center[0])
+        self.state.hand_y = float(hand_center[1])
+
         # Get raw gesture classification
         raw_gesture = self.classify_raw_gesture(landmarks)
         self.gesture_history.append(raw_gesture)
@@ -250,7 +256,7 @@ class GestureRecognizer:
         # Draw hand landmarks
         if landmarks:
             self.mp_drawing.draw_landmarks(image, landmarks, self.mp_hands.HAND_CONNECTIONS)
-        
+
         return image
 
     def run_calibration(self):
