@@ -29,14 +29,14 @@ class GestureRecognizer:
             min_detection_confidence=0.7,
             min_tracking_confidence=0.5
         )
-        
+
         self.state = GestureState()
         self.calibration = CalibrationData()
 
         self.position_history = deque(maxlen=10)
         self.velocity_history = deque(maxlen=8)
         self.gesture_history = deque(maxlen=8)
-        
+
         self.GESTURE_HOLD_TIME = 0.4
         self.NEUTRAL_RETURN_TIME = 1.0
 
@@ -144,11 +144,11 @@ class GestureRecognizer:
 
         if landmarks:
             self.mp_drawing.draw_landmarks(image, landmarks, self.mp_hands.HAND_CONNECTIONS)
-        
+
         return image
 
     def run(self):
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(1, cv2.CAP_ANY)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
