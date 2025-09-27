@@ -25,7 +25,6 @@ public class Speaking : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
