@@ -12,6 +12,8 @@ class GestureState:
     gesture_start_time: float = 0
     is_transitioning: bool = False
     confidence: float = 0.0
+    hand_x: float = 0.0
+    hand_y: float = 0.0
 
 @dataclass
 class CalibrationData:
@@ -111,6 +113,10 @@ class GestureRecognizer:
         velocity = self.calculate_hand_velocity(hand_center)
         self.position_history.append(hand_center)
         self.velocity_history.append(velocity)
+
+        # Store hand position in state (normalized coordinates 0-1)
+        self.state.hand_x = float(hand_center[0])
+        self.state.hand_y = float(hand_center[1])
 
         raw_gesture = self.classify_raw_gesture(landmarks, openness)
         self.gesture_history.append(raw_gesture)

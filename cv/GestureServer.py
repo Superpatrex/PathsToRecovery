@@ -27,6 +27,8 @@ class GestureServer:
             "gesture": current_gesture,
             "confidence": confidence,
             "is_transitioning": self.gesture_recognizer.state.is_transitioning,
+            "hand_x": self.gesture_recognizer.state.hand_x,
+            "hand_y": self.gesture_recognizer.state.hand_y,
             "timestamp": time.time()
         }
         return data

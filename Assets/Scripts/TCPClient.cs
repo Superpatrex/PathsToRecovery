@@ -20,6 +20,8 @@ public class TCPClient : MonoBehaviour
     public string currentGesture = "neutral";
     public float gestureConfidence = 0.0f;
     public bool isGestureTransitioning = false;
+    public float handX = 0.0f;
+    public float handY = 0.0f;
 
     [Header("Debug")]
     public bool enableDebugLogging = true;
@@ -92,23 +94,27 @@ public class TCPClient : MonoBehaviour
                 currentGesture = "neutral";
                 gestureConfidence = 0.0f;
                 isGestureTransitioning = false;
+                handX = 0.0f;
+                handY = 0.0f;
                 return;
             }
 
             if (enableDebugLogging && Time.frameCount % 60 == 0)
             {
-                Debug.Log($"[TCP] Parsed state - Gesture: {currentGestureState.gesture}, Confidence: {currentGestureState.confidence}");
+                Debug.Log($"[TCP] Parsed state - Gesture: {currentGestureState.gesture}, Confidence: {currentGestureState.confidence}, Hand: ({currentGestureState.hand_x:F3}, {currentGestureState.hand_y:F3})");
             }
 
-            string newGesture = currentGestureState.gesture;
+            string newGesture = currentGestureState.gesture ?? "neutral";
             float newConfidence = currentGestureState.confidence;
             bool newTransitioning = currentGestureState.is_transitioning;
+            float newHandX = currentGestureState.hand_x;
+            float newHandY = currentGestureState.hand_y;
 
             // Check for gesture changes
             if (newGesture != lastGesture)
             {
                 if (enableDebugLogging)
-                    Debug.Log($"Gesture changed: {lastGesture} -> {newGesture} (confidence: {newConfidence:F2})");
+                    Debug.Log($"Gesture changed: {lastGesture} -> {newGesture} (confidence: {newConfidence:F2}) at ({newHandX:F2}, {newHandY:F2})");
 
                 OnGestureChanged?.Invoke(newGesture);
                 lastGesture = newGesture;
@@ -126,11 +132,13 @@ public class TCPClient : MonoBehaviour
             currentGesture = newGesture;
             gestureConfidence = newConfidence;
             isGestureTransitioning = newTransitioning;
+            handX = newHandX;
+            handY = newHandY;
 
             // Log gesture data for debugging
             if (enableDebugLogging && Time.frameCount % 30 == 0) // Log every 30 frames
             {
-                Debug.Log($"[TCP] Gesture: {currentGesture}, Confidence: {gestureConfidence:F2}, Transitioning: {isGestureTransitioning}");
+                Debug.Log($"[TCP] Gesture: {currentGesture}, Confidence: {gestureConfidence:F2}, Position: ({handX:F2}, {handY:F2}), Transitioning: {isGestureTransitioning}");
             }
         }
         catch (Exception e)
@@ -173,6 +181,37 @@ public class TCPClient : MonoBehaviour
     public bool IsTransitioning()
     {
         return isGestureTransitioning;
+    }
+
+    public float GetHandX()
+    {
+        return handX;
+    }
+
+    public float GetHandY()
+    {
+        return handY;
+    }
+
+    public Vector2 GetHandPosition()
+    {
+        return new Vector2(handX, handY);
+    }
+
+    public Vector2 GetHandPositionScreenSpace()
+    {
+        return new Vector2(handX * Screen.width, handY * Screen.height);
+    }
+
+    public Vector3 GetHandPositionWorldSpace(Camera camera, float depth = 10f)
+    {
+        Vector3 screenPos = new Vector3(handX * Screen.width, handY * Screen.height, depth);
+        return camera.ScreenToWorldPoint(screenPos);
+    }
+
+    public bool HasValidHandPosition()
+    {
+        return handX >= 0f && handX <= 1f && handY >= 0f && handY <= 1f;
     }
 
     void ConnectToServer()
@@ -318,10 +357,12 @@ public class GestureState
     public string gesture;
     public float confidence;
     public bool is_transitioning;
+    public float hand_x;
+    public float hand_y;
     public float timestamp;
 
     public override string ToString()
     {
-        return $"Gesture: {gesture}, Confidence: {confidence:F2}, Transitioning: {is_transitioning}, Time: {timestamp}";
+        return $"Gesture: {gesture}, Confidence: {confidence:F2}, Position: ({hand_x:F2}, {hand_y:F2}), Transitioning: {is_transitioning}, Time: {timestamp}";
     }
 }
