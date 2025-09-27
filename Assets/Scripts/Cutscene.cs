@@ -1,8 +1,9 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
-public class GameLoop : MonoBehaviour
+public class Cutscene : MonoBehaviour
 {
     // track “good” vs “bad” endings
     public int goodEnding = 0;
@@ -26,8 +27,9 @@ public class GameLoop : MonoBehaviour
 
     void Start()
     {
-        this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
-        ShowInitialOptions();
+        StartCoroutine(Exposit(6, Dialouge.Instance.openingCutscene, 5f));
+        //this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
+        //ShowInitialOptions();
     }
 
     void Update()
@@ -67,7 +69,6 @@ public class GameLoop : MonoBehaviour
 
     void ShowInitialOptions()
     {
-        Speaking.Instance.StartSpeaking(5f, Dialouge.Instance.getRandomIntroductionLine(curEnemy.GetName()), dialogueText, false);
         Debug.Log("Press 1 to Talk, 2 to Fight");
         currentState = State.ChooseAction;
     }
@@ -134,6 +135,23 @@ public class GameLoop : MonoBehaviour
         {
             Debug.Log("Nice! You took down the bad guy. (+1 good ending)");
             goodEnding++;
+        }
+    }
+
+    IEnumerator Wait(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+    }
+
+    IEnumerator Exposit(int lines, List<string> source, float delayTime)
+    {
+        for (int i = 0; i < lines; i++)
+        {
+            Speaking.Instance.StartSpeaking(5f, source[i], dialogueText, false);
+            yield return new WaitForSeconds(delayTime+5f);
         }
     }
 

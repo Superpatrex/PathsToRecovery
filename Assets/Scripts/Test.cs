@@ -32,7 +32,7 @@ public class Test : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Speaking.Instance.GiveQuestionAndTwoResponse(Dialouge.Instance.questionsAndAnswersForNPC["The King"],
+                Speaking.Instance.GiveQuestionAndTwoResponse(Dialouge.Instance.getRandomQuestionAndAnswer("The King"),
                     leftOption, rightOption, textComponent, false);
             }
         }
