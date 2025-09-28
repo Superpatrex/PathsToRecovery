@@ -190,6 +190,21 @@ public class GameLoop : MonoBehaviour
         ShowInitialOptions();
     }
 
+    void TriggerDeadKindEnding()
+    {
+        Debug.Log("You have defeated the King! This is a bad ending.");
+    }
+
+    void TriggerTalkToDemonKing()
+    {
+        Debug.Log("You have talked to the Demon King. This is a bad ending.");
+    }
+
+    void TriggerTalkToDeadEnding()
+    {
+        Debug.Log("You have talked to the Dead King. This is a bad ending.");
+    }
+
     void TriggerBadEnding()
     {
         Debug.Log("You attacked the King! This is a bad ending.");

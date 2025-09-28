@@ -10,6 +10,10 @@ public class Dialouge
     public List<string> neutralEnding;
     public List<string> badEnding;
 
+    public List<string> killedEnding;
+    public List<string> regicideEnding;
+    public List<string> demonKingEnding;
+
     public Dictionary<string, List<DialougeWithCorrectAnswer>> questionsAndAnswersForNPC;
     public Dictionary<string, List<string>> npcIntroductionLines;
     private static Dialouge _instance;
@@ -64,6 +68,36 @@ public class Dialouge
             "Chaos reigns. You destroyed the good and empowered the wicked. The kingdom is consumed.",
             "Your contract is terminated immediately.",
             "The kingdom is lost to the flames."
+        };
+
+        killedEnding = new List<string>
+        {
+            "Your judgment faltered. A nightmare you chose to FIGHT struck a fatal blow.",
+            "The world swims and turns to static. You hear the final, victorious shriek of the beast.",
+            "Your vision fades to a familiar, cold stone ceiling. The Keep is quiet for one last time.",
+            "The Kingdom's last defense has fallen. Your sword clatters beside you, useless now.",
+            "The mist flows around your still form, gathering strength and moving toward the castle gates.",
+            "You are terminated, Warden. Permanently."
+        };
+
+        regicideEnding = new List<string>
+        {
+            "Duty. Honor. Oath. Lies.",
+            "The true source of the kingdom's weakness was not the mist, but the King's own fear.",
+            "Your sword finds the mark. The crown rolls across the polished floor of the Keep.",
+            "There is no one left to question your methods. The path to 'order' is now clear.",
+            "You take your place upon the empty throne. The night is still eternal, but now it is YOUR eternal night.",
+            "The Warden is dead. Long live the **Warden-King**."
+        };
+
+        demonKingEnding = new List<string>
+        {
+            "You sought an audience. You sought to *reason* with the darkness.",
+            "The Seal is whole, but now it serves a new master. The Demon King smiles.",
+            "He accepts your terms: The Keep remains standing, a monument to your obedience.",
+            "You stand beside the throne as his new Gate Keeper, administering the Eternal Night with cold logic.",
+            "The wicked creatures are still. The *true* reign of terror is one of cold, bureaucratic evil.",
+            "You got your raise, Warden. But you serve a much, much worse boss."
         };
 
         questionsAndAnswersForNPC = new Dictionary<string, List<DialougeWithCorrectAnswer>>();

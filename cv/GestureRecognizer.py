@@ -13,8 +13,8 @@ class GestureState:
     gesture_start_time: float = 0
     is_transitioning: bool = False
     confidence: float = 0.0
-    hand_x: float = -1.0
-    hand_y: float = -1.0
+    hand_x: float = 0.0
+    hand_y: float = 0.0
 
 @dataclass
 class CalibrationData:
@@ -152,9 +152,9 @@ class GestureRecognizer:
         
         # Require minimum confidence for non-neutral gestures
         if best_gesture != 'neutral' and confidence < 0.2:
-            return 'neutral'  # Low confidence, default to neutral
+            return 'neutral', confidence  # Low confidence, default to neutral
         
-        return best_gesture
+        return best_gesture, confidence
 
     def calculate_hand_velocity(self, current_position: np.ndarray) -> float:
         if len(self.position_history) < 2:
@@ -172,11 +172,11 @@ class GestureRecognizer:
         scores = self.calculate_relative_gesture_score(curl_score)
         
         # Classify based on scores
-        gesture = self.classify_gesture_from_scores(scores, curl_score)
+        gesture, confidence = self.classify_gesture_from_scores(scores, curl_score)
         
-        return gesture
+        return gesture, confidence, scores
 
-    def update_state_machine(self, raw_gesture: str) -> str:
+    def update_state_machine(self, raw_gesture: str, confidence: float, scores: dict) -> str:
         """State machine for gesture confirmation"""
         current_time = time.time()
         
@@ -195,6 +195,10 @@ class GestureRecognizer:
                         # Confirm gesture change
                         self.state.current_gesture = raw_gesture
                         self.state.is_transitioning = False
+
+                        print(f"Gesture: {raw_gesture.upper()}")
+                        print(f"  Confidence: {confidence:.3f}")
+                        print(f"  Scores - Open: {scores['open']:.3f}, Neutral: {scores['neutral']:.3f}, Closed: {scores['closed']:.3f}")
                         
                         return raw_gesture
                 else:
@@ -222,11 +226,11 @@ class GestureRecognizer:
         self.state.hand_y = float(hand_center[1])
 
         # Get raw gesture classification
-        raw_gesture = self.classify_raw_gesture(landmarks)
+        raw_gesture, confidence, scores = self.classify_raw_gesture(landmarks)
         self.gesture_history.append(raw_gesture)
 
         # Apply state machine for confirmation
-        confirmed_gesture = self.update_state_machine(raw_gesture)
+        confirmed_gesture = self.update_state_machine(raw_gesture, confidence, scores)
 
         return confirmed_gesture
 
@@ -343,10 +347,7 @@ class GestureRecognizer:
         
         if current_gesture_idx >= len(gestures_to_calibrate):
             self.calibration.initialized = True
-            print(f"Calibration complete!")
-            print(f"   Neutral: {self.calibration.neutral_curl_score:.3f}")
-            print(f"   Open: {self.calibration.open_curl_score:.3f}")
-            print(f"   Closed: {self.calibration.closed_curl_score:.3f}")
+
             return True
         
         return False
@@ -375,7 +376,8 @@ class GestureRecognizer:
                 else:
                     frame = self.draw_feedback(frame, "neutral", hand_landmarks)
             else:
-                self.state.hand_x, self.state.hand_y = -1, -1
+                self.state.hand_x = -1.0
+                self.state.hand_y = -1.0
                 frame = self.draw_feedback(frame, "neutral", None)
 
             cv2.imshow('Gesture Recognition', frame)

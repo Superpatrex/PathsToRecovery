@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Cutscene : MonoBehaviour
+public class BadCutscene : MonoBehaviour
 {
     // track “good” vs “bad” endings
     public int goodEnding = 0;
@@ -21,7 +21,7 @@ public class Cutscene : MonoBehaviour
     public Image background;
 
     // the name of the scene to load when the cutscene finishes
-    private string nextSceneName = "Assets/Scenes/PathToRecovery.unity";
+    private string nextSceneName = Constants.MAIN_SCENE;
 
     private enum State
     {
@@ -34,7 +34,7 @@ public class Cutscene : MonoBehaviour
     void Start()
     {
         Debug.Log(nextSceneName);
-        StartCoroutine(Exposit(6, Dialouge.Instance.openingCutscene, 5f));
+        StartCoroutine(Exposit(6, Dialouge.Instance.badEnding, 5f));
     }
 
     IEnumerator FadeImage(Image img, float fromAlpha, float toAlpha, float duration)
@@ -77,15 +77,5 @@ public class Cutscene : MonoBehaviour
 
         // Once all lines and fades are done, load the next scene
         SceneManager.LoadScene(nextSceneName);
-    }
-
-    void DoBlock()
-    {
-        Debug.Log("You block the next attack.");
-    }
-
-    bool CheckAnswer()
-    {
-        return true;
     }
 }
