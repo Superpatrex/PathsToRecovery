@@ -23,6 +23,7 @@ public class DemonCutscene : MonoBehaviour
     // the name of the scene to load when the cutscene finishes
     private string nextSceneName = Constants.MAIN_SCENE;
     public MusicPlayer musicPlayer;
+    private bool hasMusicStarted = false;
 
     private enum State
     {
@@ -37,6 +38,15 @@ public class DemonCutscene : MonoBehaviour
         Debug.Log(nextSceneName);
         musicPlayer.StartMusic();
         StartCoroutine(Exposit(6, Dialouge.Instance.demonKingEnding, 5f));
+    }
+
+    void Update()
+    {
+        if (!hasMusicStarted)
+        {
+            musicPlayer.StartMusic();
+            hasMusicStarted = true;
+        }
     }
 
     IEnumerator FadeImage(Image img, float fromAlpha, float toAlpha, float duration)

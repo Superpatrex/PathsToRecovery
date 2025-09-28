@@ -21,9 +21,9 @@ public class EnemiesUtil
         return enemies[index];
     }
 
-
     public static Enemy GetRandomEnemyAndRemove()
     {
+        //Enemy enemy = getSpecificEnemy("The Wizard");
         Enemy enemy = GetRandomEnemy();
         enemies.Remove(enemy);
         return enemy;

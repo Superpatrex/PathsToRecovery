@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameLoop : MonoBehaviour
 {
-    public int goodEnding = 4;
+    private int goodEnding = 4;
 
     private bool isEnemyGood = true;
     private Enemy curEnemy;
@@ -57,12 +57,24 @@ public class GameLoop : MonoBehaviour
             Debug.Log($"Health increased to {health}");
         }
 
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            goodEnding--;
+            Debug.Log($"Good ending decreased to {goodEnding}");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Equals))
+        {
+            goodEnding++;
+            Debug.Log($"Good ending increased to {goodEnding}");
+        }
+
         if (lastGestureTime == -1)
         {
             lastGestureTime = Time.time;
         }
 
-        if (curEnemy.IsDefeated())
+        if (curEnemy.IsDefeated() || Input.GetKeyDown(KeyCode.S))
         {
             musicPlayer.FadeOut(3f);
             Debug.Log($"You have defeated {curEnemy.GetName()}!");
@@ -111,13 +123,13 @@ public class GameLoop : MonoBehaviour
 
         //Debug.Log($"Delta time since last gesture: {delta} " + cursorImage.rectTransform.anchoredPosition.ToString() + " " + tcpClient.IsGestureClosed() + " " + tcpClient.IsGestureOpen());
 
-        if (tcpClient.IsGestureOpen() || tcpClient.IsGestureClosed())
+        if (tcpClient.IsGestureOpen() || tcpClient.IsGestureClosed() || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Alpha6))
         {
             //Debug.Log("Mouse click detected via gesture!");
 
             Vector2 cursorPos = cursorImage.rectTransform.anchoredPosition;
 
-            if (currentState == State.ChooseAction && delta > 2f && cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
+            if (Input.GetKeyDown(KeyCode.Alpha1) || currentState == State.ChooseAction && delta > 2f && cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
             {
                 //Debug.Log("Mouse clicked on TALK area");
 
@@ -128,7 +140,7 @@ public class GameLoop : MonoBehaviour
                 EnterTalk();
                 lastGestureTime = Time.time;
             }
-            else if (currentState == State.ChooseAction && delta > 2f && cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || currentState == State.ChooseAction && delta > 2f && cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
             {
                 Debug.Log("Mouse clicked on FIGHT area");
 
@@ -151,16 +163,16 @@ public class GameLoop : MonoBehaviour
                     enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
                 }
             }
-            else if (currentState == State.Talking && delta > 2f)
+            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4) || currentState == State.Talking && delta > 2f)
             {
-                if (cursorPos.x > -1350f && cursorPos.x < -420f && cursorPos.y < 280f && cursorPos.y > -200f)
+                if (Input.GetKeyDown(KeyCode.Alpha3) || cursorPos.x > -1350f && cursorPos.x < -420f && cursorPos.y < 280f && cursorPos.y > -200f)
                 {
                     Debug.Log("Mouse clicked on LEFT option");
                     ExitTalk(leftOption);
                     ClearLeftAndRightOptionsAndHide();
                     lastGestureTime = Time.time;
                 }
-                else if (cursorPos.x > 440 && cursorPos.x < 1370f && cursorPos.y < 280f && cursorPos.y > -200f)
+                else if (Input.GetKeyDown(KeyCode.Alpha4) || cursorPos.x > 440 && cursorPos.x < 1370f && cursorPos.y < 280f && cursorPos.y > -200f)
                 {
                     Debug.Log("Mouse clicked on RIGHT option");
                     ExitTalk(rightOption);
@@ -170,9 +182,9 @@ public class GameLoop : MonoBehaviour
 
                 musicPlayer.FadeOut(3f);
             }
-            else if (currentState == State.FightChoose && delta > 2f)
+            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Alpha6) || currentState == State.FightChoose && delta > 2f)
             {
-                if (cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
+                if (Input.GetKeyDown(KeyCode.Alpha5) || cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
                 {
                     // Block
                     Debug.Log("Mouse clicked on BLOCK area");
@@ -192,7 +204,7 @@ public class GameLoop : MonoBehaviour
 
                     lastGestureTime = Time.time;
                 }
-                else if (cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
+                else if (Input.GetKeyDown(KeyCode.Alpha6) || cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
                 {
                     // Attack
                     Debug.Log("Mouse clicked on ATTACK area");

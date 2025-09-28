@@ -34,9 +34,9 @@ public class Dialouge
         {
             "The Village of Aethelred is lost to an eternal night. The protective Seal is broken.",
             "An evil mist surges through cobblestone streets. Your ancestor swore an oath to protect the kingdom. You mostly just signed up for the benefits.",
-            "You are The Village Warden. The village's fate depends on your Will, Focus, and Energy.",
+            "You are The Village Warden. The village's fate depends on your decisions.",
             "Your judgement is crucial. Use it keenly to mend the Seal and dispel the darkness.",
-            "Choose wisely: TALK to save the corrupted villagers. FIGHT to destroy the malicious nightmares.",
+            "Choose wisely: TALK to save the Corrupted villagers. FIGHT to repel the Malicious ones.",
             "Good luck, Warden. They'd better give you a raise."
         };
 
@@ -47,24 +47,23 @@ public class Dialouge
             "A glorious, sun rises over the horizon of Aethelred for the first time in years.",
             "The good people you saved stand restored, watching the dawn. They are safe.",
             "The Keep is quiet. You performed your duty with wisdom and strength.",
-            "Day has returned. Your files are in order. And for a moment, you almost feel satisfied."
+            "Day has returned, hopefully for good. But better yet, you earned a raise!"
         };
 
         neutralEnding = new List<string>
         {
             "The Seal is repaired, but the mended lines flicker with uncertainty. It holds, but it is weak.",
             "The magical night recoils, but no light follows. The sun does not rise. It is simply a dull, eternal twilight.",
-            "You survived. The Keep is protected from immediate collapse, but it is deeply scarred by your poor choices.",
-            "Too many good souls were lost; too many wicked escaped. The balance is permanently off.",
-            "The kingdom endures, locked in a perpetual gray gloom, a reminder of your mixed intentions.",
+            "You survived. The Keep is protected from immediate collapse, but it is deeply scarred by your mistakes.",
+            "Too many good souls were lost; too many wicked escaped. The balance is permanently altered.",
+            "The kingdom endures, locked in a perpetual gray gloom, a reminder of your mixed success.",
             "Your contract is automatically renewed. The work never ends. Welcome to the new endless night, Gate Keeper."
         };
 
         badEnding = new List<string>
         {
             "You failed. The fragments of the Seal turn black and crumble into dust.",
-            "The Malicious creatures you allowed to live erupt in triumph. The Demon King's laughter echoes through the halls.",
-            "The light of the Keep is replaced by a terrible, angry glow. The village is on fire.",
+            "The Malicious individuals you allowed to enter erupt in triumph. The Demon King's laughter echoes through the halls.",            "The light of the Keep is replaced by a terrible, angry glow. The village is on fire.",
             "Chaos reigns. You destroyed the good and empowered the wicked. The kingdom is consumed.",
             "Your contract is terminated immediately.",
             "The kingdom is lost to the flames."
@@ -73,8 +72,8 @@ public class Dialouge
         killedEnding = new List<string>
         {
             "Your judgment faltered. A nightmare you chose to FIGHT struck a fatal blow.",
-            "The world swims and turns to static. You hear the final, victorious shriek of the beast.",
-            "Your vision fades to a familiar, cold stone ceiling. The Keep is quiet for one last time.",
+            "The world swims and turns to static. You hear the final, victorious cry of your enemy.",
+            "Your vision fades from the familiar, cold stone ceiling. The Keep is quiet for one last time.",
             "The Kingdom's last defense has fallen. Your sword clatters beside you, useless now.",
             "The mist flows around your still form, gathering strength and moving toward the castle gates.",
             "You are terminated, Warden. Permanently."
@@ -96,8 +95,8 @@ public class Dialouge
             "The Seal is whole, but now it serves a new master. The Demon King smiles.",
             "He accepts your terms: The Keep remains standing, a monument to your obedience.",
             "You stand beside the throne as his new Gate Keeper, administering the Eternal Night with cold logic.",
-            "The wicked creatures are still. The *true* reign of terror is one of cold, bureaucratic evil.",
-            "You got your raise, Warden. But you serve a much, much worse boss."
+            "The wicked creatures are still. The true reign of terror is one of cold, bureaucratic evil.",
+            "You got your raise, Warden. But was it really all worth it?"
         };
 
         questionsAndAnswersForNPC = new Dictionary<string, List<DialougeWithCorrectAnswer>>();
@@ -167,7 +166,7 @@ public class Dialouge
             // Set 1: Perseverance vs. Exhaustion
             new DialougeWithCorrectAnswer(
                 "I am too tired to sweep the walkways. Too tired to move. Tell me truly, why should any of us try to get up tomorrow?",
-                "We get up because the job isn't done. The village still needs its warden.",
+                "We get up because the job isn't done. The village still needs its pillars.",
                 "We shouldn't. I'm starting to think a nap in the gloom is the right choice."
             ),
             // Set 2: Value of Small Efforts
@@ -186,7 +185,7 @@ public class Dialouge
             // Set 1: Power Threat
             new DialougeWithCorrectAnswer(
                 "You are nothing but a bug fighting destiny. Your end is written.",
-                "Please don't be mean.", 
+                "Please don't be mean.",
                 "That's not fair.", true
             ),
             // Set 2: Inevitable Failure
@@ -253,13 +252,13 @@ public class Dialouge
         {
             "The King stands, wrapped in spectral robes, weeping silently in the center of the town square.",
             "The King kneels by a ruined storefront, pointing hopelessly into the endless night. He barely notices your arrival.",
-            "You find the King chained to a wooden scaffold by thick, spectral ropes of fear, staring blankly ahead."
+            "The King seems paralyzed, bound by spectral ropes of fear, staring blankly ahead."
         });
 
         // The Doctor
         npcIntroductionLines.Add("The Doctor", new List<string>
         {
-            "You encounter the Doctor stumbling on the cobblestones, clutching a broken syringe. Their face is pale with a crushing sickness.",
+            "You encounter the Doctor stumbling on the cobblestones, clutching a broken syringe. Their face is paler than bone.",
             "The Doctor is desperately trying to bandage a splintered well-post, muttering that nothing can be healed.",
             "The Doctor is slumped against a wall, arguing with their own shadow about the futility of medicine."
         });
@@ -275,7 +274,7 @@ public class Dialouge
         // Tired Butler
         npcIntroductionLines.Add("Tired Butler", new List<string>
         {
-            "The Butler stands motionless near a flickering torch, leaning heavily on a spectral mop, looking utterly defeated by exhaustion.",
+            "The Butler stands still near a flickering torch, leaning heavily on their trusty mop, looking worn down by exhaustion.",
             "The Butler is slowly and meticulously trying to clean the grime from a stone fountain with a tear-stained rag.",
             "You find the Butler standing guard over an empty, broken wheelbarrow, shaking his head and sighing deeply."
         });
@@ -286,14 +285,14 @@ public class Dialouge
         npcIntroductionLines.Add("Demon King", new List<string>
         {
             "A towering shadow, the Demon King laughs—a sound that scrapes against the cobblestones—and radiates cold power.",
-            "The Demon King hovers above the walkway, slowly tearing down a tattered banner with one sharp, indifferent claw.",
-            "The Demon King stops his steady, rhythmic pacing the moment you enter, locking you with two glowing red eyes."
+            "The Demon King hovers above the walkway, picking at a tattered banner with one sharp, indifferent claw.",
+            "The Demon King stops his steady, rhythmic pacing the moment you enter. Your eyes lock with his two burning red coals."
         });
 
         // The Thief
         npcIntroductionLines.Add("The Thief", new List<string>
         {
-            "A hooded sprite materializes from the shadow of a torch, mocking you with a greedy grin.",
+            "A hooded Thief materializes from the shadow of a torch, mocking you with a greedy grin.",
             "The Thief is attempting to pick the lock on the general store, whistling a cheerful, entirely inappropriate tune.",
             "The Thief is holding up a small, worthless trinket, inspecting it with malicious amusement before spotting you."
         });
@@ -309,9 +308,9 @@ public class Dialouge
         // Normal Dude with a Bomb
         npcIntroductionLines.Add("Normal Dude with a Bomb", new List<string>
         {
-            "A normal-looking guy stands in the hallway between two houses, nervously adjusting the grip on a massive, flashing bomb.",
-            "The Normal Dude with a Bomb is jogging in place on the cobblestones, looking anxious, the bomb bouncing in his sweaty hand.",
-            "The Normal Dude with a Bomb turns the corner, jumps slightly when he sees you, and holds the oversized bomb defensively."
+            "A normal-looking guy stands in the hallway between two houses, nervously adjusting his grip on something hissing behind his back.",
+            "The Normal Dude is jogging in place on the cobblestones, looking anxious. A mysterious weight bounces in his hands.",
+            "The Normal Dude turns the corner, jumps slightly when he sees you, and quickly hides something behind his back."
         });
 
     }
