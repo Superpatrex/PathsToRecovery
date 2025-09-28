@@ -119,6 +119,7 @@ public class GameLoop : MonoBehaviour
             this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
             enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
             this.enemyHealthText.text = $"{curEnemy.GetHealth()} / {curEnemy.GetMaxHealth()} Enemy HP";
+            ShowInitialOptions();
         }
         
         // Add delta to see if the TPC Client open or close has been going on for 2 seconds straight
@@ -231,12 +232,13 @@ public class GameLoop : MonoBehaviour
                     else
                     {
                         Debug.Log("You successfully attacked the enemy!");
+                        DoAttack();
+                        this.enemyHealthText.text = $"{curEnemy.GetHealth()} / {curEnemy.GetMaxHealth()} Enemy HP";
                         hideAttackAndBlockOptions();
                         ShowInitialOptions();
                     }
 
                     lastGestureTime = Time.time;
-                    DoAttack();
                 }
             }
         }
