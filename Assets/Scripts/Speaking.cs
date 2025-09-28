@@ -15,6 +15,7 @@ public class Speaking : MonoBehaviour
     private float timeLeft;
     private bool isLooping;
     private float timeBeforeClearing = 1.5f;
+    private bool skipAudio;
 
     void Awake()
     {
@@ -42,7 +43,7 @@ public class Speaking : MonoBehaviour
 
         if (timeLeft > 0f)
         {
-            if (!audioSource.isPlaying)
+            if (!skipAudio && !audioSource.isPlaying)
                 audioSource.Play();
         }
         else
@@ -64,13 +65,17 @@ public class Speaking : MonoBehaviour
         float duration,
         string textToDisplay,
         TMP_Text textComponent,
-        bool clearAfter = true
+        bool clearAfter = true,
+        bool noSound = false
     )
     {
         loopDuration = duration;
         timeLeft = duration;
         isLooping = true;
-        audioSource.Play();
+        skipAudio = noSound;
+
+        if (!skipAudio)
+            audioSource.Play();
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);

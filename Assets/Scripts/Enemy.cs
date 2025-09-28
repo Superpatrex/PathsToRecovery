@@ -41,6 +41,11 @@ public class EnemiesUtil
         }
         return null;
     }
+
+    public static bool IsEnemyListEmpty()
+    {
+        return enemies.Count == 0;
+    }
 }
 
 public class Enemy
@@ -69,5 +74,29 @@ public class Enemy
     public int GetHealth()
     {
         return this.health;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        this.health -= damage;
+        if (this.health < 0)
+        {
+            this.health = 0;
+        }
+    }
+
+    public bool IsDefeated()
+    {
+        return this.health <= 0;
+    }
+
+    public bool IsTheKing()
+    {
+        return this.enemyName == "The King";
+    }
+
+    public bool IsDemonKing()
+    {
+        return this.enemyName == "Demon King";
     }
 }

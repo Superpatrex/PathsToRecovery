@@ -166,9 +166,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46223292}
-  - component: {fileID: 46223291}
-  - component: {fileID: 46223290}
-  - component: {fileID: 46223289}
   - component: {fileID: 46223288}
   - component: {fileID: 46223287}
   m_Layer: 0
@@ -201,6 +198,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c07cfe61b59fbe488cc2bde5232a711, type: 3}
   - {fileID: 21300000, guid: e0f9746c2bdf8374b91c09680c41338c, type: 3}
   background: {fileID: 303334009}
+  musicPlayer: {fileID: 259312169}
 --- !u!114 &46223288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,58 +215,6 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 5c8121b93dc0a4382bd2a65dc5918d20, type: 3}
   volume: 0.5
   loopDuration: 5
---- !u!114 &46223289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46223286}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4d147875b26b42db924b6ff90fb3233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  percentageText: {fileID: 0}
-  currentPercentage: 0
-  targetPercentage: 100
-  duration: 2
---- !u!114 &46223290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46223286}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f444b964397454107b9b6c8fe8f66790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 0}
-  leftOption: {fileID: 0}
-  rightOption: {fileID: 0}
-  textToDisplay: 
-  adjustPercentage: {fileID: 46223289}
---- !u!114 &46223291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46223286}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166c66ff2179e4c0296f17ab1242e09d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goodEnding: 0
-  endingNum: 0
-  leftPanel: {fileID: 0}
-  rightPanel: {fileID: 0}
-  dialogueText: {fileID: 0}
-  leftOption: {fileID: 0}
-  rightOption: {fileID: 0}
 --- !u!4 &46223292
 Transform:
   m_ObjectHideFlags: 0
@@ -784,8 +730,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1818997561}
-  audioClip: {fileID: 8300000, guid: af03874b802854012a8996b4a372b325, type: 3}
-  volume: 0.5
+  audioClip: {fileID: 8300000, guid: 6014308fe719440769d9f1f7ba5f478e, type: 3}
+  volume: 0.3
 --- !u!4 &259312170
 Transform:
   m_ObjectHideFlags: 0

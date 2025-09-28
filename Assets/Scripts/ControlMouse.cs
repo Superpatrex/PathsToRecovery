@@ -15,8 +15,8 @@ public class ControlMouse : MonoBehaviour
     void Update()
     {
         var handPos = tcpClient.GetHandPosition();
-        float x = handPos.x * 700f - 350f;
-        float y = -1f * (handPos.y * 400f - 200f);
+        float x = handPos.x * 3000f - 1500f;
+        float y = -1f * (handPos.y * 1640f - 820f);
         this.image.rectTransform.anchoredPosition = new Vector2(x, y);
         //Debug.Log($"Hand Position: ({handPos.x}, {handPos.y}) -> Image Position: ({x}, {y})");
     }

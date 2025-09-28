@@ -228,6 +228,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: effd29244606649d1bfdd79867bdb418, type: 3}
   - {fileID: 21300000, guid: de7ceaea07938447184defb3923c5fba, type: 3}
   background: {fileID: 303334009}
+  musicPlayer: {fileID: 259312169}
 --- !u!1 &58106729
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1818997561}
-  audioClip: {fileID: 8300000, guid: af03874b802854012a8996b4a372b325, type: 3}
+  audioClip: {fileID: 8300000, guid: 623ec377f03cc48c08bb2ed07e2ad2da, type: 3}
   volume: 0.5
 --- !u!4 &259312170
 Transform:

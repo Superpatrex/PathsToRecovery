@@ -2,11 +2,11 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameLoop : MonoBehaviour
 {
-    public int goodEnding = 0;
-    public int endingNum = 0;
+    public int goodEnding = 4;
 
     private bool isEnemyGood = true;
     private Enemy curEnemy;
@@ -15,6 +15,7 @@ public class GameLoop : MonoBehaviour
     public TMP_Text dialogueText;
     public TMP_Text leftOption;
     public TMP_Text rightOption;
+    public TMP_Text healthText;
     public SpriteRenderer enemySpriteRenderer;
     public ImageHolder imageHolder;
     public Image cursorImage;
@@ -23,7 +24,12 @@ public class GameLoop : MonoBehaviour
 
     public Image fightImage;
     public Image talkImage;
-    private int health = 100;
+    public Image blockImage;
+    public Image attackImage;
+    private float health = 100f;
+    private bool isEnemyGoingToAttack = false;
+    public MusicPlayer musicPlayer;
+    private bool hasFirstOneHappened = true;
 
     private enum State
     {
@@ -40,25 +46,75 @@ public class GameLoop : MonoBehaviour
         this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
         enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
         ShowInitialOptions();
+        this.healthText.text = $"{health} HP";
     }
 
     void Update()
     {
+        if (hasFirstOneHappened)
+        {
+            hasFirstOneHappened = false;
+            musicPlayer.FadeOut(0f);
+        }
         // If we press the h key, we add 50 health to the player
         if (Input.GetKeyDown(KeyCode.H))
         {
             health += 50;
             Debug.Log($"Health increased to {health}");
         }
-            
+
         if (lastGestureTime == -1)
         {
             lastGestureTime = Time.time;
         }
+
+        if (curEnemy.IsDefeated())
+        {
+            musicPlayer.FadeOut(3f);
+            Debug.Log($"You have defeated {curEnemy.GetName()}!");
+
+            if (curEnemy.IsGood())
+            {
+                goodEnding++;
+                Debug.Log($"Good ending increased to {goodEnding}");
+            }
+            else
+            {
+                goodEnding--;
+                Debug.Log($"Good ending decreased to {goodEnding}");
+            }
+
+            if (curEnemy.IsTheKing())
+                {
+                    TriggerDeadKindEnding();
+                    return;
+                }
+
+            if (EnemiesUtil.IsEnemyListEmpty())
+            {
+                if (goodEnding >= 8)
+                {
+                    TriggerGoodEnding();
+                }
+                else if (goodEnding >= 0 && goodEnding < 8)
+                {
+                    TriggerNeutralEnding();
+                }
+                else if (goodEnding < 0)
+                {
+                    TriggerBadEnding();
+                }
+
+                return;
+            }
+
+            this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
+            enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
+        }
         
         // Add delta to see if the TPC Client open or close has been going on for 2 seconds straight
         float delta = Time.time - lastGestureTime;
-        
+
         //Debug.Log($"Delta time since last gesture: {delta} " + cursorImage.rectTransform.anchoredPosition.ToString() + " " + tcpClient.IsGestureClosed() + " " + tcpClient.IsGestureOpen());
 
         if (tcpClient.IsGestureOpen() || tcpClient.IsGestureClosed())
@@ -67,8 +123,7 @@ public class GameLoop : MonoBehaviour
 
             Vector2 cursorPos = cursorImage.rectTransform.anchoredPosition;
 
-
-            if (currentState == State.ChooseAction && delta > 2f && cursorPos.x < -70f && cursorPos.x > -320f && cursorPos.y < 50f && cursorPos.y > -70f)
+            if (currentState == State.ChooseAction && delta > 2f && cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
             {
                 //Debug.Log("Mouse clicked on TALK area");
 
@@ -79,32 +134,100 @@ public class GameLoop : MonoBehaviour
                 EnterTalk();
                 lastGestureTime = Time.time;
             }
-            else if (currentState == State.ChooseAction && delta > 2f && cursorPos.x > 75f && cursorPos.x < 320f && cursorPos.y < 50f && cursorPos.y > -70f)
+            else if (currentState == State.ChooseAction && delta > 2f && cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
             {
                 Debug.Log("Mouse clicked on FIGHT area");
 
+                musicPlayer.StartMusic();
                 enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.ATTACK);
                 currentState = State.FightChoose;
                 hideTalkFightOptions();
                 EnterFight();
                 lastGestureTime = Time.time;
+                isEnemyGoingToAttack = Random.value > 0.5f;
+
+                if (isEnemyGoingToAttack)
+                {
+                    Debug.Log("Enemy is going to attack!");
+                    enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.ATTACK);
+                }
+                else
+                {
+                    Debug.Log("Enemy is loafing around!");
+                    enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
+                }
             }
             else if (currentState == State.Talking && delta > 2f)
             {
-                //Debug.Log(cursorPos.x + " " + cursorPos.y);
-                if (cursorPos.x > -450f && cursorPos.x < 0 && cursorPos.y < 300f && cursorPos.y > -300f)
+                if (cursorPos.x > -1350f && cursorPos.x < -420f && cursorPos.y < 280f && cursorPos.y > -200f)
                 {
                     Debug.Log("Mouse clicked on LEFT option");
                     ExitTalk(leftOption);
                     ClearLeftAndRightOptionsAndHide();
                     lastGestureTime = Time.time;
                 }
-                else if (cursorPos.x > 0 && cursorPos.x < 450f && cursorPos.y < 300f && cursorPos.y > -300f)
+                else if (cursorPos.x > 440 && cursorPos.x < 1370f && cursorPos.y < 280f && cursorPos.y > -200f)
                 {
                     Debug.Log("Mouse clicked on RIGHT option");
                     ExitTalk(rightOption);
                     ClearLeftAndRightOptionsAndHide();
                     lastGestureTime = Time.time;
+                }
+
+                musicPlayer.FadeOut(3f);
+            }
+            else if (currentState == State.FightChoose && delta > 2f)
+            {
+                if (cursorPos.x < -120f && cursorPos.x > -650f && cursorPos.y < 50f && cursorPos.y > -120f)
+                {
+                    // Block
+                    Debug.Log("Mouse clicked on BLOCK area");
+                    if (isEnemyGoingToAttack)
+                    {
+                        Debug.Log("You successfully blocked the attack!");
+                        DoBlock();
+                        hideAttackAndBlockOptions();
+                        ShowInitialOptions();
+                    }
+                    else
+                    {
+                        Debug.Log("You blocked at nothing. Kinda embarrassing.");
+                        hideAttackAndBlockOptions();
+                        ShowInitialOptions();
+                    }
+
+                    lastGestureTime = Time.time;
+                }
+                else if (cursorPos.x > 200f && cursorPos.x < 820f && cursorPos.y < 50f && cursorPos.y > -120f)
+                {
+                    // Attack
+                    Debug.Log("Mouse clicked on ATTACK area");
+                    if (isEnemyGoingToAttack)
+                    {
+                        Debug.Log("You tried to attack while the enemy was attacking you. They were faster than you and got hit!");
+                        health -= 20;
+                        this.healthText.text = $"{health} HP";
+                        Debug.Log($"Your health is now {health}");
+
+                        if (health <= 0)
+                        {
+                            Debug.Log("You have been defeated due to loss of health. This is a bad ending.");
+                            SceneManager.LoadScene(Constants.DEAD_CUTSCENE);
+                            return;
+                        }
+
+                        hideAttackAndBlockOptions();
+                        ShowInitialOptions();
+                    }
+                    else
+                    {
+                        Debug.Log("You successfully attacked the enemy!");
+                        hideAttackAndBlockOptions();
+                        ShowInitialOptions();
+                    }
+
+                    lastGestureTime = Time.time;
+                    DoAttack();
                 }
             }
         }
@@ -112,6 +235,18 @@ public class GameLoop : MonoBehaviour
         {
             lastGestureTime = Time.time;
         }
+    }
+
+    void hideAttackAndBlockOptions()
+    {
+        this.attackImage.gameObject.SetActive(false);
+        this.blockImage.gameObject.SetActive(false);
+    }
+
+    void showAttackAndBlockOptions()
+    {
+        this.attackImage.gameObject.SetActive(true);
+        this.blockImage.gameObject.SetActive(true);
     }
 
     void hideTalkFightOptions()
@@ -131,6 +266,7 @@ public class GameLoop : MonoBehaviour
         Speaking.Instance.StartSpeaking(5f, Dialouge.Instance.getRandomIntroductionLine(curEnemy.GetName()), dialogueText, false);
         Debug.Log("Press 1 to Talk, 2 to Fight");
         currentState = State.ChooseAction;
+        enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
         ShowTalkFightOptions();
     }
 
@@ -152,6 +288,12 @@ public class GameLoop : MonoBehaviour
     {
         Debug.Log("You finish talking.");
 
+        if (curEnemy.IsDemonKing())
+        {
+            TriggerTalkToDemonKing();
+            return;
+        }
+
         if (isEnemyGood)
         {
             if (CheckAnswer(option.text))
@@ -161,8 +303,7 @@ public class GameLoop : MonoBehaviour
             }
             else
             {
-                Debug.Log("You fumbled the conversation... (-1 endingNum)");
-                endingNum--;
+                Debug.Log("You fumbled the conversation... (-1 good ending)");
             }
         }
         else
@@ -178,7 +319,7 @@ public class GameLoop : MonoBehaviour
 
     void EnterFight()
     {
-        StartCoroutine(EnterFightRoutine());
+        showAttackAndBlockOptions();
     }
 
     IEnumerator EnterFightRoutine()
@@ -193,50 +334,48 @@ public class GameLoop : MonoBehaviour
             yield break;
         }
 
-        this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
-        enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
         ShowInitialOptions();
     }
 
     void TriggerDeadKindEnding()
     {
         Debug.Log("You have defeated the King! This is a bad ending.");
+        SceneManager.LoadScene(Constants.DEAD_KING_CUTSCENE);
     }
 
     void TriggerTalkToDemonKing()
     {
         Debug.Log("You have talked to the Demon King. This is a bad ending.");
+        SceneManager.LoadScene(Constants.DEMON_CUTSCENE);
     }
 
     void TriggerTalkToDeadEnding()
     {
         Debug.Log("You have talked to the Dead King. This is a bad ending.");
+        SceneManager.LoadScene(Constants.DEAD_CUTSCENE);
     }
 
     void TriggerBadEnding()
     {
         Debug.Log("You attacked the King! This is a bad ending.");
+        SceneManager.LoadScene(Constants.BAD_CUTSCENE);
     }
 
     void TriggerGoodEnding()
     {
         Debug.Log("You have defeated all enemies and reached a good ending!");
+        SceneManager.LoadScene(Constants.GOOD_CUTSCENE);
     }
 
     void TriggerNeutralEnding()
     {
         Debug.Log("You have reached a neutral ending.");
+        SceneManager.LoadScene(Constants.NEUTRAL_CUTSCENE);
     }
 
     void DoAttack()
     {
-        Debug.Log($"You attack!");
-
-        if (!isEnemyGood)
-        {
-            Debug.Log("Nice! You took down the bad guy. (+1 good ending)");
-            goodEnding++;
-        }
+        curEnemy.TakeDamage(50);
     }
 
     void DoBlock()

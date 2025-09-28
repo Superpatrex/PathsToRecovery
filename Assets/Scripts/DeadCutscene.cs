@@ -22,6 +22,8 @@ public class DeadCutscene : MonoBehaviour
 
     // the name of the scene to load when the cutscene finishes
     private string nextSceneName = Constants.MAIN_SCENE;
+    public MusicPlayer musicPlayer;
+
 
     private enum State
     {
@@ -34,6 +36,7 @@ public class DeadCutscene : MonoBehaviour
     void Start()
     {
         Debug.Log(nextSceneName);
+        musicPlayer.StartMusic();
         StartCoroutine(Exposit(6, Dialouge.Instance.killedEnding, 5f));
     }
 
@@ -66,7 +69,7 @@ public class DeadCutscene : MonoBehaviour
                 yield return StartCoroutine(FadeImage(background, 0f, 1f, 1f));
             }
 
-            Speaking.Instance.StartSpeaking(5f, source[i], dialogueText, false);
+            Speaking.Instance.StartSpeaking(5f, source[i], dialogueText, false, true);
             yield return new WaitForSeconds(delayTime + 3f);
 
             if (i < cutsceneSprites.Count)
