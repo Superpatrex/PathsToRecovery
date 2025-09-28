@@ -53,12 +53,14 @@ public class Enemy
     private string enemyName;
     private bool isGood;
     private int health;
+    private int maxHealth;
 
     public Enemy(string name, bool good, int health)
     {
         this.enemyName = name;
         this.isGood = good;
         this.health = health;
+        this.maxHealth = health;
     }
 
     public string GetName()
@@ -74,6 +76,11 @@ public class Enemy
     public int GetHealth()
     {
         return this.health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return this.maxHealth;
     }
 
     public void TakeDamage(int damage)

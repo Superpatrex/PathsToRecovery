@@ -86,7 +86,7 @@ public class Dialouge
             "Your sword finds the mark. The crown rolls across the polished floor of the Keep.",
             "There is no one left to question your methods. The path to 'order' is now clear.",
             "You take your place upon the empty throne. The night is still eternal, but now it is YOUR eternal night.",
-            "The Warden is dead. Long live the **Warden-King**."
+            "The Warden is dead. Long live the WARDEN-KING."
         };
 
         demonKingEnding = new List<string>

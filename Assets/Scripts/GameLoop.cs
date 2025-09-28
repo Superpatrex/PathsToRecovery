@@ -29,6 +29,7 @@ public class GameLoop : MonoBehaviour
     private float health = 100f;
     private bool isEnemyGoingToAttack = false;
     public MusicPlayer musicPlayer;
+    public TMP_Text enemyHealthText;
 
     private enum State
     {
@@ -46,6 +47,7 @@ public class GameLoop : MonoBehaviour
         enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
         ShowInitialOptions();
         this.healthText.text = $"{health} HP";
+        this.enemyHealthText.text = $"{curEnemy.GetHealth()} / {curEnemy.GetMaxHealth()} Enemy HP";
     }
 
     void Update()
@@ -91,10 +93,10 @@ public class GameLoop : MonoBehaviour
             }
 
             if (curEnemy.IsTheKing())
-                {
-                    TriggerDeadKindEnding();
-                    return;
-                }
+            {
+                TriggerDeadKindEnding();
+                return;
+            }
 
             if (EnemiesUtil.IsEnemyListEmpty())
             {
@@ -116,6 +118,7 @@ public class GameLoop : MonoBehaviour
 
             this.curEnemy = EnemiesUtil.GetRandomEnemyAndRemove();
             enemySpriteRenderer.sprite = imageHolder.GetSprite(curEnemy.GetName(), ImageHolder.State.NEUTRAL);
+            this.enemyHealthText.text = $"{curEnemy.GetHealth()} / {curEnemy.GetMaxHealth()} Enemy HP";
         }
         
         // Add delta to see if the TPC Client open or close has been going on for 2 seconds straight
