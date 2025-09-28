@@ -29,7 +29,6 @@ public class GameLoop : MonoBehaviour
     private float health = 100f;
     private bool isEnemyGoingToAttack = false;
     public MusicPlayer musicPlayer;
-    private bool hasFirstOneHappened = true;
 
     private enum State
     {
@@ -51,11 +50,6 @@ public class GameLoop : MonoBehaviour
 
     void Update()
     {
-        if (hasFirstOneHappened)
-        {
-            hasFirstOneHappened = false;
-            musicPlayer.FadeOut(0f);
-        }
         // If we press the h key, we add 50 health to the player
         if (Input.GetKeyDown(KeyCode.H))
         {

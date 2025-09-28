@@ -22,10 +22,7 @@ public class MusicPlayer : MonoBehaviour
 
     void Update()
     {
-        if (!this.audioSource.isPlaying)
-        {
-            this.audioSource.Play();
-        }
+        
     }
 
     public void Stop()
