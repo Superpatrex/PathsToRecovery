@@ -63,9 +63,7 @@ class GestureRecognizer:
             'neutral': (128, 128, 128),
             'transitioning': (0, 165, 255),
             'open': (0, 255, 0),
-            'closed': (0, 0, 255),
-            'palm_up': (0, 255, 0),      # Green for "yes"
-            'palm_down': (0, 0, 255)     # Red for "no"
+            'closed': (0, 0, 255)
         }
 
         # MediaPipe hand landmark indices
@@ -130,7 +128,7 @@ class GestureRecognizer:
     def calculate_relative_rotation_score(self, current_angle: float) -> dict:
         """Calculate relative scores for rotation gestures based on calibration"""
         if not self.calibration.rotation_initialized:
-            return {'palm_up': 0, 'neutral': 1, 'palm_down': 0}
+            return {'open': 0, 'neutral': 1, 'closed': 0}
         
         # Calculate distances to each calibrated angle
         dist_to_up = abs(current_angle - self.calibration.palm_up_angle)
@@ -141,9 +139,9 @@ class GestureRecognizer:
         max_dist = max(dist_to_up, dist_to_neutral, dist_to_down) + 0.001
         
         scores = {
-            'palm_up': 1 - (dist_to_up / max_dist),
+            'open': 1 - (dist_to_up / max_dist),
             'neutral': 1 - (dist_to_neutral / max_dist),
-            'palm_down': 1 - (dist_to_down / max_dist)
+            'closed': 1 - (dist_to_down / max_dist)
         }
         
         return scores
@@ -308,7 +306,7 @@ class GestureRecognizer:
                         if self.mode == GestureMode.FIST_CURL:
                             print(f"  Scores - Open: {scores['open']:.3f}, Neutral: {scores['neutral']:.3f}, Closed: {scores['closed']:.3f}")
                         else:
-                            print(f"  Scores - Palm Up: {scores['palm_up']:.3f}, Neutral: {scores['neutral']:.3f}, Palm Down: {scores['palm_down']:.3f}")
+                            print(f"  Scores - Open: {scores['open']:.3f}, Neutral: {scores['neutral']:.3f}, Closed: {scores['closed']:.3f}")
                         
                         return raw_gesture
                 else:
@@ -396,7 +394,7 @@ class GestureRecognizer:
         if self.mode == GestureMode.FIST_CURL:
             gestures_to_calibrate = ['neutral', 'open', 'closed']
         else:  # WRIST_ROTATION
-            gestures_to_calibrate = ['neutral', 'palm_up', 'palm_down']
+            gestures_to_calibrate = ['neutral', 'open', 'closed']
             
         current_gesture_idx = 0
         samples = []
@@ -420,9 +418,9 @@ class GestureRecognizer:
             else:
                 if current_gesture == 'neutral':
                     instruction_text = f"Position {current_gesture_idx + 1}/3: Hand flat facing camera"
-                elif current_gesture == 'palm_up':
+                elif current_gesture == 'open':
                     instruction_text = f"Position {current_gesture_idx + 1}/3: Palm UP (parallel to camera)"
-                else:  # palm_down
+                else:  # closed
                     instruction_text = f"Position {current_gesture_idx + 1}/3: Palm DOWN (away from camera)"
             
             cv2.putText(frame, instruction_text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
@@ -466,9 +464,9 @@ class GestureRecognizer:
                         else:  # WRIST_ROTATION
                             if current_gesture == 'neutral':
                                 self.calibration.neutral_palm_angle = avg_measurement
-                            elif current_gesture == 'palm_up':
+                            elif current_gesture == 'open':
                                 self.calibration.palm_up_angle = avg_measurement
-                            elif current_gesture == 'palm_down':
+                            elif current_gesture == 'closed':
                                 self.calibration.palm_down_angle = avg_measurement
                         
                         current_gesture_idx += 1
