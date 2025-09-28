@@ -23,6 +23,7 @@ public class GameLoop : MonoBehaviour
 
     public Image fightImage;
     public Image talkImage;
+    private int health = 100;
 
     private enum State
     {
@@ -43,6 +44,13 @@ public class GameLoop : MonoBehaviour
 
     void Update()
     {
+        // If we press the h key, we add 50 health to the player
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            health += 50;
+            Debug.Log($"Health increased to {health}");
+        }
+            
         if (lastGestureTime == -1)
         {
             lastGestureTime = Time.time;

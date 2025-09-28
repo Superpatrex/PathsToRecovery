@@ -221,7 +221,13 @@ MonoBehaviour:
   goodEnding: 0
   endingNum: 0
   dialogueText: {fileID: 1626351372}
-  cutsceneSprites: []
+  cutsceneSprites:
+  - {fileID: 21300000, guid: ea2b9395b3d3e453f970726f5dfb33ae, type: 3}
+  - {fileID: 21300000, guid: 912953ca6173f448b82d7f4e5502aa99, type: 3}
+  - {fileID: 21300000, guid: 8a8c04fc7f78a4f67a64f203877dc64d, type: 3}
+  - {fileID: 21300000, guid: a020095e868604546bcfdc8dba15efe2, type: 3}
+  - {fileID: 21300000, guid: 3619dc6d449ba4d4b90a77302913442b, type: 3}
+  - {fileID: 21300000, guid: 30fbbbc206a234ee8867dbb1df516512, type: 3}
   background: {fileID: 303334009}
 --- !u!1 &58106729
 GameObject:
