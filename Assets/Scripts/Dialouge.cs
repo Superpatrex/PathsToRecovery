@@ -213,8 +213,8 @@ public class Dialouge
             )
         });
 
-        // Pied Piper
-        questionsAndAnswersForNPC.Add("Pied Piper", new List<DialougeWithCorrectAnswer>
+        // Jester
+        questionsAndAnswersForNPC.Add("The Jester", new List<DialougeWithCorrectAnswer>
         {
             // Set 1: Deception/Mockery
             new DialougeWithCorrectAnswer(
@@ -224,7 +224,7 @@ public class Dialouge
             ),
             // Set 2: Mocking Authority
             new DialougeWithCorrectAnswer(
-                "The Elder is an imbecile. The Doctor is a hack. You're an idiot. Why defend people who are so weak?",
+                "The Wizard is an imbecile. The Doctor is a hack. You're an idiot. Why defend people who are so weak?",
                 "You shouldn't talk about people like that.",
                 "You're not wrong, but I'm still the Warden.", true
             )
@@ -297,12 +297,12 @@ public class Dialouge
             "The Thief is holding up a small, worthless trinket, inspecting it with malicious amusement before spotting you."
         });
 
-        // Pied Piper
-        npcIntroductionLines.Add("Pied Piper", new List<string>
+        // The Jester
+        npcIntroductionLines.Add("The Jester", new List<string>
         {
-            "The Pied Piper stands playing a horrible, dissonant tune that makes the shadow rats swarming the streets squirm with glee.",
-            "The Pied Piper bows deeply before you, his flute pressed against his lips, ready to unleash a cacophony of fear.",
-            "You hear the faint, sickening sound of the flute before you see the Pied Piper leading a small parade of shadow creatures down the walkway."
+            "The Jester does a standing backflip, and follows it up with the most absurd rude gesture you could possibly imagine.",
+            "The Jester bows deeply before you, the bells on his cap jingle sharply, almost seeming to laugh at your expense.",
+            "You hear the tinkle of bells and breaking glass before you see the Jester, smashing abandoned windows with gusto and a very large hammer."
         });
 
         // Normal Dude with a Bomb

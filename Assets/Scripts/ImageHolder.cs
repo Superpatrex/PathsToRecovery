@@ -58,7 +58,7 @@ public class ImageHolder : MonoBehaviour
                 return DemonKingSprites;
             case "Tired Butler":
                 return ButlerSprites;
-            case "Pied Piper":
+            case "The Jester":
                 return PiperSprites;
             case "Normal Dude with a Bomb":
                 return BombDudeSprites;

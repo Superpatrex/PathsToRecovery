@@ -2971,8 +2971,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4810,7 +4810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166c66ff2179e4c0296f17ab1242e09d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goodEnding: 0
   leftPanel: {fileID: 1291723628}
   rightPanel: {fileID: 95891283}
   dialogueText: {fileID: 1290249688}
@@ -6604,9 +6603,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: edcc85f773b04405ab9d657fce11969d, type: 3}
   - {fileID: 21300000, guid: aa2a0823340cf4a2ab6e045bc50f4fb4, type: 3}
   PiperSprites:
-  - {fileID: 21300000, guid: 86a6eca0643e6471199a0ec3d57831c0, type: 3}
-  - {fileID: 21300000, guid: b8cbddcd2991342f194742d075eb9550, type: 3}
-  - {fileID: 21300000, guid: 9548ad19e21cd4ec49cc73bc41acd792, type: 3}
+  - {fileID: 21300000, guid: 4f994e634ba6c446ebe44c38238a8e62, type: 3}
+  - {fileID: 21300000, guid: f9ecfb950e4df4361835c20933d8c2d0, type: 3}
+  - {fileID: 21300000, guid: c34903fbdb3f04e658ea33057df0c64b, type: 3}
   BombDudeSprites:
   - {fileID: 21300000, guid: b722041417de94190aae28ce60dd1c1f, type: 3}
   - {fileID: 21300000, guid: 8707540f988fb4b51aaa75fc22bdf045, type: 3}
@@ -8140,8 +8139,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

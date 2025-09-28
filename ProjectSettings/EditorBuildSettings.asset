@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TalkToDemonKing.unity
     guid: 888409094e20c4d3eb26ab2e134d9821
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: ee7ad438c04f84fd583bbe352c413772
   m_configObjects: {}

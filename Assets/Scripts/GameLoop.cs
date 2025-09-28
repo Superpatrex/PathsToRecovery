@@ -247,24 +247,28 @@ public class GameLoop : MonoBehaviour
     {
         this.attackImage.gameObject.SetActive(false);
         this.blockImage.gameObject.SetActive(false);
+        lastGestureTime = Time.time;
     }
 
     void showAttackAndBlockOptions()
     {
         this.attackImage.gameObject.SetActive(true);
         this.blockImage.gameObject.SetActive(true);
+        lastGestureTime = Time.time;
     }
 
     void hideTalkFightOptions()
     {
         this.talkImage.gameObject.SetActive(false);
         this.fightImage.gameObject.SetActive(false);
+        lastGestureTime = Time.time;
     }
 
     void ShowTalkFightOptions()
     {
         this.talkImage.gameObject.SetActive(true);
         this.fightImage.gameObject.SetActive(true);
+        lastGestureTime = Time.time;
     }
 
     void ShowInitialOptions()

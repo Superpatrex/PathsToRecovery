@@ -11,7 +11,7 @@ public class EnemiesUtil
         new Enemy("Tired Butler", true, 50),
         new Enemy("Demon King", false, 500),
         new Enemy("The Thief", false, 100),
-        new Enemy("Pied Piper", false, 50),
+        new Enemy("The Jester", false, 50),
         new Enemy("Normal Dude with a Bomb", false, 100)
     };
 

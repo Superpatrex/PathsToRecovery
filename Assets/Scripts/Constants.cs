@@ -8,6 +8,6 @@ public class Constants
     public const string BAD_CUTSCENE = "Assets/Scenes/BadEnding.unity";
     public const string DEMON_CUTSCENE = "Assets/Scenes/TalkToDemonKing.unity";
     public const string DEAD_KING_CUTSCENE = "Assets/Scenes/DeadKing.unity";
-    public const string START_SCREEN = "Assets/Scenes/StartScreen.unity";
+    public const string START_SCREEN = "Assets/Scenes/StartMenu.unity";
 
 }

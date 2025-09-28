@@ -21,7 +21,7 @@ public class KillKingCutscene : MonoBehaviour
     public Image background;
 
     // the name of the scene to load when the cutscene finishes
-    private string nextSceneName = Constants.MAIN_SCENE;
+    private string nextSceneName = Constants.START_SCREEN;
     public MusicPlayer musicPlayer;
     private bool hasMusicStarted = false;
     private enum State
