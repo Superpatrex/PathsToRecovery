@@ -28,6 +28,19 @@ public class EnemiesUtil
         enemies.Remove(enemy);
         return enemy;
     }
+
+    public static Enemy getSpecificEnemy(string name)
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.GetName() == name)
+            {
+                enemies.Remove(enemy);
+                return enemy;
+            }
+        }
+        return null;
+    }
 }
 
 public class Enemy

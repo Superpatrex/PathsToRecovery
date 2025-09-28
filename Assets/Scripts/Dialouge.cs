@@ -152,14 +152,14 @@ public class Dialouge
             // Set 1: Power Threat
             new DialougeWithCorrectAnswer(
                 "You are nothing but a bug fighting destiny. Your end is written.",
-                "Please don't be mean.", // Useless Answer 1
-                "That's not fair."      // Useless Answer 2
+                "Please don't be mean.", 
+                "That's not fair.", true
             ),
             // Set 2: Inevitable Failure
             new DialougeWithCorrectAnswer(
                 "I control the Mists and the night. Your little candle of hope will be extinguished by my breath alone.",
                 "That sounds like a terrible way to go.",
-                "Don't you have better things to do than talk to me?"
+                "Don't you have better things to do than talk to me?", true
             )
         });
 
@@ -170,13 +170,13 @@ public class Dialouge
             new DialougeWithCorrectAnswer(
                 "I'm only here for the villagers' hidden goods. You don't have to get hurt. Just let me pass, idiot.",
                 "Maybe I should let you pass.",
-                "Stealing is very rude."
+                "Stealing is very rude.", true
             ),
             // Set 2: Temptation
             new DialougeWithCorrectAnswer(
                 "I have riches hidden under the cobblestones. I'll split them with you. Turn around, Warden, and we'll both be rich.",
                 "I don't need your dirty money.",
-                "Fifty-fifty is a bad rate."
+                "Fifty-fifty is a bad rate.", true
             )
         });
 
@@ -187,13 +187,13 @@ public class Dialouge
             new DialougeWithCorrectAnswer(
                 "I've told the others you're to blame for the night. They all believed me, of course.",
                 "No one likes a liar.",
-                "That's not good for my reputation."
+                "That's not good for my reputation.", true
             ),
             // Set 2: Mocking Authority
             new DialougeWithCorrectAnswer(
                 "The Elder is an imbecile. The Doctor is a hack. You're an idiot. Why defend people who are so weak?",
                 "You shouldn't talk about people like that.",
-                "You're not wrong, but I'm still the Warden."
+                "You're not wrong, but I'm still the Warden.", true
             )
         });
 
@@ -204,13 +204,13 @@ public class Dialouge
             new DialougeWithCorrectAnswer(
                 "I am going to hurt you, and it's going to be loud.",
                 "Please don't.",
-                "That is not good."
+                "That is not good.", true
             ),
             // Set 2: Unpredictable Violence
             new DialougeWithCorrectAnswer(
                 "I don't know why I have this, but I'm going to throw it now. Hope you have good insurance.",
                 "I think my insurance is lapsed.",
-                "I would prefer you didn't throw that."
+                "I would prefer you didn't throw that.", true
             )
         });
 
@@ -329,6 +329,7 @@ public class DialougeWithCorrectAnswer
     public string question;
     public string correctAnswer;
     public string wrongAnswer;
+    public bool hasNoCorrectAnswer = false;
 
     public DialougeWithCorrectAnswer(string question, string correctAnswer, string wrongAnswer)
     {
@@ -337,8 +338,16 @@ public class DialougeWithCorrectAnswer
         this.wrongAnswer = wrongAnswer;
     }
 
+    public DialougeWithCorrectAnswer(string question, string correctAnswer, string wrongAnswer, bool hasNoCorrectAnswer)
+    {
+        this.question = question;
+        this.correctAnswer = correctAnswer;
+        this.wrongAnswer = wrongAnswer;
+        this.hasNoCorrectAnswer = hasNoCorrectAnswer;
+    }
+
     public bool IsCorrect(string answer)
     {
-        return answer.Trim().ToLower() == correctAnswer.Trim().ToLower();
+        return answer.Trim().ToLower() == correctAnswer.Trim().ToLower() && !hasNoCorrectAnswer;
     }
 }

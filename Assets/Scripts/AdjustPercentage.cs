@@ -9,11 +9,17 @@ public class AdjustPercentage : MonoBehaviour
     public float currentPercentage = 0f;
     public float targetPercentage = 100f;
     public float duration = 2f;
+    public TCPClient tcpClient;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(AdjustPercentageCoroutine());
+        //StartCoroutine(AdjustPercentageCoroutine());
+    }
+
+    void Update()
+    {
+        percentageText.text = tcpClient.GetLastGesture();
     }
 
     private Coroutine percentageCoroutine;

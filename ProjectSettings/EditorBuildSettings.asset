@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/JackCutscene.unity
+    guid: 6e779f35cc8c64b4dbf78908a43e7e4e
+  - enabled: 1
+    path: Assets/Scenes/PathToRecovery.unity
+    guid: 878395d3a560c6749837911bb19f1d42
   m_configObjects: {}
